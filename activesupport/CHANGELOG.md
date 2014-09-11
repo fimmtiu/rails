@@ -335,4 +335,10 @@
 
     *Jeremy Kemper*
 
+*   Add the ability to supply `ActiveSupport::StringInquirer` with a list of
+    acceptable method names, for cases where you don't want it to blindly
+    attempt to respond to every method.
+
+    *Dennis Taylor*
+
 Please check [4-1-stable](https://github.com/rails/rails/blob/4-1-stable/activesupport/CHANGELOG.md) for previous changes.

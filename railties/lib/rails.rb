@@ -57,11 +57,24 @@ module Rails
     end
 
     def env
-      @_env ||= ActiveSupport::StringInquirer.new(ENV["RAILS_ENV"] || ENV["RACK_ENV"] || "development")
+      @_env ||= begin
+        current_env = ENV["RAILS_ENV"] || ENV["RACK_ENV"] || "development"
+        ActiveSupport::StringInquirer.new(current_env, environments)
+      end
     end
 
     def env=(environment)
-      @_env = ActiveSupport::StringInquirer.new(environment)
+      @_env = ActiveSupport::StringInquirer.new(environment, environments)
+    end
+
+    # Builds a list of known Rails environments by looking at all the
+    # filenames in the config/environments directory.
+    def environments
+      @_env_list ||= begin
+        Dir["#{Rails.root}/config/environments/*.rb"].map do |name|
+          Pathname.new(name).basename.sub_ext("").to_s
+        end
+      end
     end
 
     # Returns all rails groups for loading based on:
