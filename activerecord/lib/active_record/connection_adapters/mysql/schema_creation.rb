@@ -20,7 +20,7 @@ module ActiveRecord
           end
 
           def visit_ChangeColumnDefinition(o)
-            change_column_sql = +"CHANGE #{quote_column_name(o.name)} #{accept(o.column)}"
+            change_column_sql = +"MODIFY #{accept(o.column)}"
             add_column_position!(change_column_sql, column_options(o.column))
           end
 
